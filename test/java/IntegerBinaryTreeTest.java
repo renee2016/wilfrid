@@ -56,6 +56,7 @@ public class IntegerBinaryTreeTest {
         integerBinaryTree.insert(5);
 
         Assert.assertNotNull(integerBinaryTree.findValue(5));
+        assertEquals(integerBinaryTree.size(), 1);
     }
 
     @Test
@@ -70,28 +71,34 @@ public class IntegerBinaryTreeTest {
         integerBinaryTree.insert(15);
 
         Assert.assertNotNull(integerBinaryTree.findValue(15));
+        Assert.assertEquals(integerBinaryTree.size(),2);
     }
 
     @Test
     public void should__be_able_to_insert_a_new_node_to_an_non_empty_tree() throws Exception {
         IntegerBinaryTree integerBinaryTree =createATreeWith3Nodes();
+        Assert.assertEquals(integerBinaryTree.size(), 3);
 
         integerBinaryTree.insert(5);
 
         Assert.assertNotNull(integerBinaryTree.findValue(5));
+        Assert.assertEquals(integerBinaryTree.size(), 4);
     }
 
     @Test
     public void should_be_able_to_insert_multiple_new_nodes_to_an_non_empty_tree() throws Exception {
 
         IntegerBinaryTree integerBinaryTree =createATreeWith3Nodes();
+        Assert.assertEquals(integerBinaryTree.size(), 3);
 
         integerBinaryTree.insert(5);
 
         Assert.assertNotNull(integerBinaryTree.findValue(5));
+        Assert.assertEquals(integerBinaryTree.size(), 4);
 
         integerBinaryTree.insert(15);
 
         Assert.assertNotNull(integerBinaryTree.findValue(15));
+        Assert.assertEquals(integerBinaryTree.size(), 5);
     }
 }

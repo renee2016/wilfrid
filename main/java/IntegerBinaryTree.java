@@ -10,7 +10,7 @@ public class IntegerBinaryTree {
 
     public IntegerBinaryTree(ArrayList<Integer> elements) {
         int size = elements.size();
-        for(int i = 0 ; i< size; ++ i){
+        for (int i = 0; i < size; ++i) {
             insert(elements.get(i));
         }
     }
@@ -20,36 +20,36 @@ public class IntegerBinaryTree {
         return count;
     }
 
-    public void insert(int newValue) {
-        if(root==null){
+    public IntegerBinaryTreeNode insert(int newValue) {
+        if (root == null) {
             root = new IntegerBinaryTreeNode(newValue);
+            ++count;
+            return root;
         }
-        else{
-            IntegerBinaryTreeNode currentNode = root;
-            while (currentNode != null)
-            {
-                if(currentNode.getValue()> newValue){
-                    if(currentNode.getLeftChildNode() == null){
-                        currentNode.setLeftChildNode(new IntegerBinaryTreeNode(newValue));
-                    }
-                    else {
-                        currentNode = currentNode.getLeftChildNode();
-                    }
+        IntegerBinaryTreeNode currentNode = root;
+        while (currentNode != null) {
+            if (currentNode.getValue() > newValue) {
+                if (currentNode.getLeftChildNode() == null) {
+                    IntegerBinaryTreeNode newNode = new IntegerBinaryTreeNode(newValue);
+                    currentNode.setLeftChildNode(newNode);
+                    ++count;
+                    return newNode;
                 }
-                else if(currentNode.getValue()<newValue){
-                    if(currentNode.getRightChildNode() == null){
-                        currentNode.setRightChildNode(new IntegerBinaryTreeNode(newValue));
-                    }
-                    else{
-                        currentNode = currentNode.getRightChildNode();
-                    }
+                currentNode = currentNode.getLeftChildNode();
+            } else if (currentNode.getValue() < newValue) {
+                if (currentNode.getRightChildNode() == null) {
+                    IntegerBinaryTreeNode newNode = new IntegerBinaryTreeNode(newValue);
+                    currentNode.setRightChildNode(newNode);
+                    ++count;
+                    return newNode;
                 }
-                else{
-                    return;
-                }
+                currentNode = currentNode.getRightChildNode();
+            } else {
+                return currentNode;
             }
+
         }
-        ++count;
+        return currentNode;
     }
 
     public IntegerBinaryTreeNode getRoot() {
@@ -59,19 +59,18 @@ public class IntegerBinaryTree {
     public IntegerBinaryTreeNode findValue(int value) {
         IntegerBinaryTreeNode currentNode = getRoot();
 
-        while (currentNode != null){
-            if(currentNode.getValue() == value){
-                return  currentNode;
+        while (currentNode != null) {
+            if (currentNode.getValue() == value) {
+                return currentNode;
             }
 
-            if(currentNode.getValue() > value){
+            if (currentNode.getValue() > value) {
                 currentNode = currentNode.getLeftChildNode();
-            }
-            else {
+            } else {
                 currentNode = currentNode.getRightChildNode();
             }
         }
 
-        return  currentNode;
+        return currentNode;
     }
 }
