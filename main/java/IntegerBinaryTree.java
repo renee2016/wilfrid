@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class IntegerBinaryTree {
     private ArrayList elements = new ArrayList();
     private int count = 0;
+    private IntegerTreeNode root;
 
     public IntegerBinaryTree() {
     }
@@ -21,6 +22,13 @@ public class IntegerBinaryTree {
     }
 
     public void insert(int element) {
+        if(root==null){
+            root = new IntegerTreeNode(element);
+        }
         ++count;
+    }
+
+    public IntegerTreeNode getRoot() {
+        return root;
     }
 }
