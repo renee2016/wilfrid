@@ -1,19 +1,18 @@
 
 import java.util.ArrayList;
 
-/**
- * Created by jfwu on 2016-12-23.
- */
 public class IntegerBinaryTree {
-    private ArrayList elements = new ArrayList();
     private int count = 0;
-    private IntegerTreeNode root;
+    private IntegerBinaryTreeNode root;
 
     public IntegerBinaryTree() {
     }
 
-    public IntegerBinaryTree(ArrayList elements) {
-        this.elements = elements;
+    public IntegerBinaryTree(ArrayList<Integer> elements) {
+        int size = elements.size();
+        for(int i = 0 ; i< size; ++ i){
+            insert(elements.get(i));
+        }
     }
 
 
@@ -21,14 +20,58 @@ public class IntegerBinaryTree {
         return count;
     }
 
-    public void insert(int element) {
+    public void insert(int newValue) {
         if(root==null){
-            root = new IntegerTreeNode(element);
+            root = new IntegerBinaryTreeNode(newValue);
+        }
+        else{
+            IntegerBinaryTreeNode currentNode = root;
+            while (currentNode != null)
+            {
+                if(currentNode.getValue()> newValue){
+                    if(currentNode.getLeftChildNode() == null){
+                        currentNode.setLeftChildNode(new IntegerBinaryTreeNode(newValue));
+                    }
+                    else {
+                        currentNode = currentNode.getLeftChildNode();
+                    }
+                }
+                else if(currentNode.getValue()<newValue){
+                    if(currentNode.getRightChildNode() == null){
+                        currentNode.setRightChildNode(new IntegerBinaryTreeNode(newValue));
+                    }
+                    else{
+                        currentNode = currentNode.getRightChildNode();
+                    }
+                }
+                else{
+                    return;
+                }
+            }
         }
         ++count;
     }
 
-    public IntegerTreeNode getRoot() {
+    public IntegerBinaryTreeNode getRoot() {
         return root;
+    }
+
+    public IntegerBinaryTreeNode findValue(int value) {
+        IntegerBinaryTreeNode currentNode = getRoot();
+
+        while (currentNode != null){
+            if(currentNode.getValue() == value){
+                return  currentNode;
+            }
+
+            if(currentNode.getValue() > value){
+                currentNode = currentNode.getLeftChildNode();
+            }
+            else {
+                currentNode = currentNode.getRightChildNode();
+            }
+        }
+
+        return  currentNode;
     }
 }
