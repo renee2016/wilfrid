@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/**
- * Created by jfwu on 2016-12-27.
- */
 public class IntegerBinaryTreeTest {
     @Test
     public void should_be_able_to_create_am_empty_tree() throws Exception {
@@ -47,4 +44,5 @@ public class IntegerBinaryTreeTest {
         assertNotNull(integerBinaryTree.getRoot());
 
     }
+
 }

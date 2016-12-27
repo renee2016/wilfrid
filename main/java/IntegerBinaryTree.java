@@ -1,13 +1,10 @@
 
 import java.util.ArrayList;
 
-/**
- * Created by jfwu on 2016-12-23.
- */
 public class IntegerBinaryTree {
     private ArrayList elements = new ArrayList();
     private int count = 0;
-    private IntegerTreeNode root;
+    private IntegerBinaryTreeNode root;
 
     public IntegerBinaryTree() {
     }
@@ -23,12 +20,12 @@ public class IntegerBinaryTree {
 
     public void insert(int element) {
         if(root==null){
-            root = new IntegerTreeNode(element);
+            root = new IntegerBinaryTreeNode(element);
         }
         ++count;
     }
 
-    public IntegerTreeNode getRoot() {
+    public IntegerBinaryTreeNode getRoot() {
         return root;
     }
 }
