@@ -15,6 +15,9 @@ public class IntegerBinaryTree {
         }
     }
 
+    public IntegerBinaryTreeNode getRoot() {
+        return root;
+    }
 
     public int size() {
         return count;
@@ -50,10 +53,6 @@ public class IntegerBinaryTree {
 
         }
         return currentNode;
-    }
-
-    public IntegerBinaryTreeNode getRoot() {
-        return root;
     }
 
     public IntegerBinaryTreeNode findValue(int value) {

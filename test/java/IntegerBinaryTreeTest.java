@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class IntegerBinaryTreeTest {
+
     @Test
     public void should_be_able_to_create_am_empty_tree() throws Exception {
 
@@ -22,13 +23,7 @@ public class IntegerBinaryTreeTest {
         assertNotNull(binaryTree);
     }
 
-    private IntegerBinaryTree createATreeWith3Nodes() {
-        ArrayList arrayList = new ArrayList();
-        arrayList.add(1);
-        arrayList.add(4);
-        arrayList.add(3);
-        return new IntegerBinaryTree(arrayList);
-    }
+
 
     @Test
     public void should_be_able_to_insert_an_element() throws Exception {
@@ -100,5 +95,13 @@ public class IntegerBinaryTreeTest {
 
         Assert.assertNotNull(integerBinaryTree.findValue(15));
         Assert.assertEquals(integerBinaryTree.size(), 5);
+    }
+
+    private IntegerBinaryTree createATreeWith3Nodes() {
+        ArrayList arrayList = new ArrayList();
+        arrayList.add(1);
+        arrayList.add(4);
+        arrayList.add(3);
+        return new IntegerBinaryTree(arrayList);
     }
 }
