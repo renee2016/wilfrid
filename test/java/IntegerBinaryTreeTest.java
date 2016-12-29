@@ -119,7 +119,28 @@ public class IntegerBinaryTreeTest {
         Assert.assertEquals(integerBinaryTree.size(), 2);
     }
 
+    @Test(expected=IntegerBinaryTreeNodeNotFoundError.class)
+    public void should_throw_exception_when_try_to_delete_a_node_not_in_the_tree() throws Throwable {
+        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(1, 4, 3);
+        integerBinaryTree.delete(5);
+    }
 
+    @Test
+    public void should_still_be_a_binary_tree_after_deleting_a_node() throws Exception, IntegerBinaryTreeNodeNotFoundError {
+        IntegerBinaryTree integerBinaryTree = new IntegerBinaryTree();
+        integerBinaryTree.insert(10);
+        integerBinaryTree.insert(1);
+        integerBinaryTree.insert(5);
+        integerBinaryTree.insert(8);
+        integerBinaryTree.insert(20);
+        integerBinaryTree.insert(12);
+        integerBinaryTree.insert(40);
+
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
+        integerBinaryTree.delete(10);
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+    }
 
     private boolean isBinaryTree(IntegerBinaryTree integerBinaryTree) {
         IntegerBinaryTreeNode currentNode = integerBinaryTree.getRoot();

@@ -92,7 +92,7 @@ public class IntegerBinaryTree {
             return;
         }
 
-        IntegerBinaryTreeNode minimumChild = findNodeWithMinimumValueInLeftSubTree(nodeToDelete);
+        IntegerBinaryTreeNode minimumChild = findNodeWithMinimumValueInRightSubTree(nodeToDelete);
         nodeToDelete.setValue(minimumChild.getValue());
         deleteNodeWithOnly1ChildNode(minimumChild);
     }
@@ -104,7 +104,12 @@ public class IntegerBinaryTree {
 
     private ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode, ArrayList<IntegerBinaryTreeNode> sortedNodes) {
         IntegerBinaryTreeNode currentNode = rootNode;
-        if(isLeaf(currentNode)){
+
+        if (currentNode == null) {
+            return sortedNodes;
+        }
+
+        if (isLeaf(currentNode)) {
             sortedNodes.add(currentNode);
             return sortedNodes;
         }
@@ -116,32 +121,30 @@ public class IntegerBinaryTree {
         return sortedNodes;
     }
 
-    private IntegerBinaryTreeNode findNodeWithMinimumValueInLeftSubTree(IntegerBinaryTreeNode nodeToDelete) {
-        IntegerBinaryTreeNode leftChild = nodeToDelete.getLeftChildNode();
-        if(leftChild == null)
-            return  null;
+    private IntegerBinaryTreeNode findNodeWithMinimumValueInRightSubTree(IntegerBinaryTreeNode nodeToDelete) {
+        IntegerBinaryTreeNode rightChild = nodeToDelete.getRightChildNode();
+        if (rightChild == null)
+            return null;
 
-        ArrayList<IntegerBinaryTreeNode> nodesInLeftSubTree = inOrderTraverse(leftChild);
-        return  nodesInLeftSubTree.get(0);
+        ArrayList<IntegerBinaryTreeNode> nodesInLeftSubTree = inOrderTraverse(rightChild);
+        return nodesInLeftSubTree.get(0);
     }
-
 
 
     private void deleteNodeWithOnly1ChildNode(IntegerBinaryTreeNode nodeToDelete) {
         IntegerBinaryTreeNode parentNode = nodeToDelete.getParentNode();
         IntegerBinaryTreeNode childNode = getChildNode(nodeToDelete);
 
-        if(parentNode == null){
+        if (parentNode == null) {
             root = childNode;
             count--;
             return;
         }
-       ;
+        ;
         if (isLeftChildNode(parentNode, nodeToDelete)) {
             parentNode.setLeftChildNode(childNode);
             count--;
-        }
-        else if(isRightChildNode(parentNode, nodeToDelete)){
+        } else if (isRightChildNode(parentNode, nodeToDelete)) {
             parentNode.setRightChildNode(childNode);
             count--;
         }
@@ -159,8 +162,8 @@ public class IntegerBinaryTree {
         IntegerBinaryTreeNode leftChildNode = nodeToDelete.getLeftChildNode();
         IntegerBinaryTreeNode rightChildNode = nodeToDelete.getRightChildNode();
 
-        if(leftChildNode != null) return leftChildNode;
-        if(rightChildNode !=null) return  rightChildNode;
+        if (leftChildNode != null) return leftChildNode;
+        if (rightChildNode != null) return rightChildNode;
 
         return null;
     }
