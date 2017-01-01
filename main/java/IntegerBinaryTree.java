@@ -94,7 +94,12 @@ public class IntegerBinaryTree {
 
         IntegerBinaryTreeNode minimumChild = findNodeWithMinimumValueInRightSubTree(nodeToDelete);
         nodeToDelete.setValue(minimumChild.getValue());
-        deleteNodeWithOnly1ChildNode(minimumChild);
+
+        if(isLeaf(minimumChild)){
+            deleteLeafNode(minimumChild);
+        }else{
+            deleteNodeWithOnly1ChildNode(minimumChild);
+        }
     }
 
     public static ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode) {
