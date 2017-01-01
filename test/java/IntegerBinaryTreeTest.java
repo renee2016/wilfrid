@@ -23,6 +23,14 @@ public class IntegerBinaryTreeTest {
         assertNotNull(binaryTree);
     }
 
+    @Test
+    public void should_have_a_root_node_if_the_tree_is_not_empty() throws Exception {
+        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(1, 4, 3);
+
+        assertNotNull(integerBinaryTree);
+        assertNotNull(integerBinaryTree.getRoot());
+
+    }
 
     @Test
     public void should_be_able_to_insert_an_element() throws Exception {
@@ -34,14 +42,6 @@ public class IntegerBinaryTreeTest {
 
     }
 
-    @Test
-    public void should_have_a_root_node_if_the_tree_is_not_empty() throws Exception {
-        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(1, 4, 3);
-
-        assertNotNull(integerBinaryTree);
-        assertNotNull(integerBinaryTree.getRoot());
-
-    }
 
     @Test
     public void should__be_able_to_insert_a_new_node_to_an_empty_tree() throws Exception {
@@ -108,21 +108,57 @@ public class IntegerBinaryTreeTest {
         Assert.assertTrue(isBinaryTree(integerBinaryTree));
     }
 
+    @Test(expected=IntegerBinaryTreeNodeNotFoundError.class)
+    public void should_throw_exception_when_try_to_delete_a_node_not_in_the_tree() throws Throwable {
+        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(1, 4, 3);
+        integerBinaryTree.delete(5);
+    }
+
     @Test
     public void should_be_able_to_delete_a_node() throws Exception, IntegerBinaryTreeNodeNotFoundError {
         IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(1, 4, 3);
         Assert.assertEquals(integerBinaryTree.size(), 3);
-
 
         integerBinaryTree.delete(1);
 
         Assert.assertEquals(integerBinaryTree.size(), 2);
     }
 
-    @Test(expected=IntegerBinaryTreeNodeNotFoundError.class)
-    public void should_throw_exception_when_try_to_delete_a_node_not_in_the_tree() throws Throwable {
-        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(1, 4, 3);
+    @Test
+    public void should_be_able_to_delete_a_leaf_node_from_a_tree() throws Exception, IntegerBinaryTreeNodeNotFoundError {
+        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(4, 5, 3);
+
+        integerBinaryTree.delete(3);
+
+        Assert.assertEquals(integerBinaryTree.size(),2);
+        Assert.assertNull(integerBinaryTree.findValue(3));
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+    }
+
+    @Test
+    public void should_be_able_to_delete_a_tree_node_with_only_1_subtree() throws Exception, IntegerBinaryTreeNodeNotFoundError {
+        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(4, 5, 3);
+        integerBinaryTree.insert(7);
+
         integerBinaryTree.delete(5);
+
+        Assert.assertEquals(integerBinaryTree.size(),3);
+        Assert.assertNull(integerBinaryTree.findValue(5));
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+    }
+
+    @Test
+    public void should_be_able_to_delete_a_treenode_with_2_subtrees() throws Exception, IntegerBinaryTreeNodeNotFoundError {
+        IntegerBinaryTree integerBinaryTree = createATreeWith3Nodes(6,9,3);
+        integerBinaryTree.insert(10);
+        integerBinaryTree.insert(8);
+
+        integerBinaryTree.delete(9);
+
+        Assert.assertEquals(integerBinaryTree.size(),4);
+        Assert.assertNull(integerBinaryTree.findValue(9));
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
     }
 
     @Test
@@ -138,8 +174,24 @@ public class IntegerBinaryTreeTest {
 
         Assert.assertTrue(isBinaryTree(integerBinaryTree));
 
+        integerBinaryTree.delete(8);
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
+        integerBinaryTree.delete(20);
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
         integerBinaryTree.delete(10);
         Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
+        integerBinaryTree.delete(40);
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
+        integerBinaryTree.delete(1);
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
+        integerBinaryTree.delete(12);
+        Assert.assertTrue(isBinaryTree(integerBinaryTree));
+
     }
 
     private boolean isBinaryTree(IntegerBinaryTree integerBinaryTree) {
@@ -153,7 +205,7 @@ public class IntegerBinaryTreeTest {
         IntegerBinaryTreeNode leftChildNode = currentNode.getLeftChildNode();
         IntegerBinaryTreeNode rightChildNode = currentNode.getRightChildNode();
         if (leftChildNode != null) {
-            if (leftChildNode.getValue() > currentNode.getValue()) {
+            if (getMaxiumValueInTree(leftChildNode) > currentNode.getValue()) {
                 return false;
             }
 
@@ -163,7 +215,7 @@ public class IntegerBinaryTreeTest {
             }
         }
         if (rightChildNode != null) {
-            if (rightChildNode.getValue() < currentNode.getValue()) {
+            if( getMinimumValueInTree(rightChildNode) < currentNode.getValue()) {
                 return false;
             }
             isBinaryTree &= isBinaryTree(rightChildNode);
@@ -173,6 +225,16 @@ public class IntegerBinaryTreeTest {
         }
 
         return true;
+    }
+
+    private int getMinimumValueInTree(IntegerBinaryTreeNode thisNode) {
+        ArrayList<IntegerBinaryTreeNode> integerBinaryTreeNodes = IntegerBinaryTree.inOrderTraverse(thisNode);
+        return integerBinaryTreeNodes.get(0).getValue();
+    }
+
+    private int getMaxiumValueInTree(IntegerBinaryTreeNode thisNode){
+        ArrayList<IntegerBinaryTreeNode> integerBinaryTreeNodes = IntegerBinaryTree.inOrderTraverse(thisNode);
+        return  integerBinaryTreeNodes.get(integerBinaryTreeNodes.size()-1).getValue();
     }
 
     private IntegerBinaryTree createATreeWith3Nodes(int val1, int val2, int val3) {

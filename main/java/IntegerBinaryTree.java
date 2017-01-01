@@ -97,12 +97,12 @@ public class IntegerBinaryTree {
         deleteNodeWithOnly1ChildNode(minimumChild);
     }
 
-    public ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode) {
+    public static ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode) {
         ArrayList<IntegerBinaryTreeNode> sortedNodes = new ArrayList<IntegerBinaryTreeNode>();
         return inOrderTraverse(rootNode, sortedNodes);
     }
 
-    private ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode, ArrayList<IntegerBinaryTreeNode> sortedNodes) {
+    private static ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode, ArrayList<IntegerBinaryTreeNode> sortedNodes) {
         IntegerBinaryTreeNode currentNode = rootNode;
 
         if (currentNode == null) {
@@ -197,7 +197,9 @@ public class IntegerBinaryTree {
         }
     }
 
-    private boolean isLeaf(IntegerBinaryTreeNode nodeToDelete) {
+    private static boolean isLeaf(IntegerBinaryTreeNode nodeToDelete) {
         return nodeToDelete.getRightChildNode() == null && nodeToDelete.getLeftChildNode() == null;
     }
+
+
 }
