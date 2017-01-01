@@ -163,14 +163,8 @@ public class IntegerBinaryTreeTest {
 
     @Test
     public void should_still_be_a_binary_tree_after_deleting_a_node() throws Exception, IntegerBinaryTreeNodeNotFoundError {
-        IntegerBinaryTree integerBinaryTree = new IntegerBinaryTree();
-        integerBinaryTree.insert(10);
-        integerBinaryTree.insert(1);
-        integerBinaryTree.insert(5);
-        integerBinaryTree.insert(8);
-        integerBinaryTree.insert(20);
-        integerBinaryTree.insert(12);
-        integerBinaryTree.insert(40);
+        int [] values ={10,1,5,8,20,12,40};
+        IntegerBinaryTree integerBinaryTree = createTreeWithListOfValues(values);
 
         Assert.assertTrue(isBinaryTree(integerBinaryTree));
 
@@ -192,6 +186,32 @@ public class IntegerBinaryTreeTest {
         integerBinaryTree.delete(12);
         Assert.assertTrue(isBinaryTree(integerBinaryTree));
 
+    }
+
+    @Test
+    public void should_be_able_to_in_order_traverser_a_tree_and_return_node_list_in_ascending_order() throws Exception {
+        int [] values ={10,1,5,8,20,12,40};
+        IntegerBinaryTree integerBinaryTree = createTreeWithListOfValues(values);
+
+        ArrayList<IntegerBinaryTreeNode> integerBinaryTreeNodes = integerBinaryTree.inOrderTraverse(integerBinaryTree.getRoot());
+        IntegerBinaryTreeNode preNode = null;
+
+        for (IntegerBinaryTreeNode integerBinaryTreeNode : integerBinaryTreeNodes) {
+            if(preNode != null){
+                Assert.assertTrue(preNode.getValue() < integerBinaryTreeNode.getValue());
+            }
+            preNode = integerBinaryTreeNode;
+        }
+    }
+
+    private IntegerBinaryTree createTreeWithListOfValues(int[] values) {
+        IntegerBinaryTree integerBinaryTree = new IntegerBinaryTree();
+
+        for(int i = 0; i<values.length; ++i){
+
+            integerBinaryTree.insert(values[i]);
+        }
+        return integerBinaryTree;
     }
 
     private boolean isBinaryTree(IntegerBinaryTree integerBinaryTree) {
