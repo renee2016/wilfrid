@@ -148,7 +148,7 @@ public class IntegerBinarySearchTreeTest {
     }
 
     @Test
-    public void should_be_able_to_delete_a_treenode_with_2_subtrees() throws Exception, IntegerBinaryTreeNodeNotFoundError {
+    public void should_be_able_to_delete_a_tree_node_with_2_subtrees() throws Exception, IntegerBinaryTreeNodeNotFoundError {
         IntegerBinarySearchTree integerBinarySearchTree = createATreeWith3Nodes(6,9,3);
         integerBinarySearchTree.insert(10);
         integerBinarySearchTree.insert(8);
