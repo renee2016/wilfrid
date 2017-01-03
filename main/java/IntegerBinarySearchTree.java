@@ -1,14 +1,14 @@
 
 import java.util.ArrayList;
 
-public class IntegerBinaryTree {
+public class IntegerBinarySearchTree {
     private int count = 0;
     private IntegerBinaryTreeNode root;
 
-    public IntegerBinaryTree() {
+    public IntegerBinarySearchTree() {
     }
 
-    public IntegerBinaryTree(ArrayList<Integer> elements) {
+    public IntegerBinarySearchTree(ArrayList<Integer> elements) {
         int size = elements.size();
         for (int i = 0; i < size; ++i) {
             insert(elements.get(i));
@@ -207,6 +207,5 @@ public class IntegerBinaryTree {
     private static boolean isLeaf(IntegerBinaryTreeNode thisNode) {
         return thisNode.getRightChildNode() == null && thisNode.getLeftChildNode() == null;
     }
-
 
 }
