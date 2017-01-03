@@ -1,19 +1,18 @@
 public class IntegerBinaryTreeNode {
+    private int value;
     private IntegerBinaryTreeNode leftChildNode;
     private IntegerBinaryTreeNode rightChildNode;
     private IntegerBinaryTreeNode parentNode;
+
+    public IntegerBinaryTreeNode(int value) {
+        this.value = value;
+    }
 
     public int getValue() {
         return value;
     }
 
     public void setValue(int value) {
-        this.value = value;
-    }
-
-    private int value;
-
-    public IntegerBinaryTreeNode(int value) {
         this.value = value;
     }
 
