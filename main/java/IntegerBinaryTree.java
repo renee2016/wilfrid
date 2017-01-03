@@ -75,6 +75,11 @@ public class IntegerBinaryTree {
         return currentNode;
     }
 
+    public static ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode) {
+        ArrayList<IntegerBinaryTreeNode> sortedNodes = new ArrayList<IntegerBinaryTreeNode>();
+        return inOrderTraverse(rootNode, sortedNodes);
+    }
+
     public void delete(int value) throws IntegerBinaryTreeNodeNotFoundError {
         IntegerBinaryTreeNode nodeToDelete = findValue(value);
 
@@ -82,6 +87,10 @@ public class IntegerBinaryTree {
             throw new IntegerBinaryTreeNodeNotFoundError(value);
         }
 
+        deleteNode(nodeToDelete);
+    }
+
+    private void deleteNode(IntegerBinaryTreeNode nodeToDelete) {
         if (isLeaf(nodeToDelete)) {
             deleteLeafNode(nodeToDelete);
             return;
@@ -94,17 +103,52 @@ public class IntegerBinaryTree {
 
         IntegerBinaryTreeNode minimumChild = findNodeWithMinimumValueInRightSubTree(nodeToDelete);
         nodeToDelete.setValue(minimumChild.getValue());
-
-        if(isLeaf(minimumChild)){
-            deleteLeafNode(minimumChild);
-        }else{
-            deleteNodeWithOnly1ChildNode(minimumChild);
-        }
+        deleteNode(minimumChild);
     }
 
-    public static ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode) {
-        ArrayList<IntegerBinaryTreeNode> sortedNodes = new ArrayList<IntegerBinaryTreeNode>();
-        return inOrderTraverse(rootNode, sortedNodes);
+    private void deleteNodeWithOnly1ChildNode(IntegerBinaryTreeNode nodeToDelete) {
+        IntegerBinaryTreeNode parentNode = nodeToDelete.getParentNode();
+        IntegerBinaryTreeNode childNode = getChildNode(nodeToDelete);
+
+        if (parentNode == null) {
+            root = childNode;
+            count--;
+            return;
+        }
+        ;
+        if (isLeftChildNode(parentNode, nodeToDelete)) {
+            parentNode.setLeftChildNode(childNode);
+        } else if (isRightChildNode(parentNode, nodeToDelete)) {
+            parentNode.setRightChildNode(childNode);
+        }
+
+        childNode.setParentNode(parentNode);
+        nodeToDelete.setParentNode(null);
+        count--;
+    }
+
+    private void deleteLeafNode(IntegerBinaryTreeNode nodeToDelete) {
+        IntegerBinaryTreeNode parentNode = nodeToDelete.getParentNode();
+
+        if (parentNode == null) {
+            root = null;
+            count = 0;
+            return;
+        }
+
+        deleteFromParent(parentNode, nodeToDelete);
+        count--;
+        return;
+    }
+
+    private void deleteFromParent(IntegerBinaryTreeNode parentNode, IntegerBinaryTreeNode nodeToDelete) {
+        if (parentNode.getRightChildNode() == nodeToDelete) {
+            parentNode.setRightChildNode(null);
+            nodeToDelete.setParentNode(null);
+        } else if (parentNode.getLeftChildNode() == nodeToDelete) {
+            parentNode.setLeftChildNode(null);
+            nodeToDelete.setParentNode(null);
+        }
     }
 
     private static ArrayList<IntegerBinaryTreeNode> inOrderTraverse(IntegerBinaryTreeNode rootNode, ArrayList<IntegerBinaryTreeNode> sortedNodes) {
@@ -126,33 +170,13 @@ public class IntegerBinaryTree {
         return sortedNodes;
     }
 
-    private IntegerBinaryTreeNode findNodeWithMinimumValueInRightSubTree(IntegerBinaryTreeNode nodeToDelete) {
-        IntegerBinaryTreeNode rightChild = nodeToDelete.getRightChildNode();
+    private IntegerBinaryTreeNode findNodeWithMinimumValueInRightSubTree(IntegerBinaryTreeNode thisNode) {
+        IntegerBinaryTreeNode rightChild = thisNode.getRightChildNode();
         if (rightChild == null)
             return null;
 
         ArrayList<IntegerBinaryTreeNode> nodesInLeftSubTree = inOrderTraverse(rightChild);
         return nodesInLeftSubTree.get(0);
-    }
-
-
-    private void deleteNodeWithOnly1ChildNode(IntegerBinaryTreeNode nodeToDelete) {
-        IntegerBinaryTreeNode parentNode = nodeToDelete.getParentNode();
-        IntegerBinaryTreeNode childNode = getChildNode(nodeToDelete);
-
-        if (parentNode == null) {
-            root = childNode;
-            count--;
-            return;
-        }
-        ;
-        if (isLeftChildNode(parentNode, nodeToDelete)) {
-            parentNode.setLeftChildNode(childNode);
-            count--;
-        } else if (isRightChildNode(parentNode, nodeToDelete)) {
-            parentNode.setRightChildNode(childNode);
-            count--;
-        }
     }
 
     private boolean isLeftChildNode(IntegerBinaryTreeNode parentNode, IntegerBinaryTreeNode thisNode) {
@@ -163,9 +187,9 @@ public class IntegerBinaryTree {
         return parentNode.getRightChildNode() == thisNode;
     }
 
-    private IntegerBinaryTreeNode getChildNode(IntegerBinaryTreeNode nodeToDelete) {
-        IntegerBinaryTreeNode leftChildNode = nodeToDelete.getLeftChildNode();
-        IntegerBinaryTreeNode rightChildNode = nodeToDelete.getRightChildNode();
+    private IntegerBinaryTreeNode getChildNode(IntegerBinaryTreeNode thisNode) {
+        IntegerBinaryTreeNode leftChildNode = thisNode.getLeftChildNode();
+        IntegerBinaryTreeNode rightChildNode = thisNode.getRightChildNode();
 
         if (leftChildNode != null) return leftChildNode;
         if (rightChildNode != null) return rightChildNode;
@@ -173,37 +197,15 @@ public class IntegerBinaryTree {
         return null;
     }
 
-    private boolean has1ChildNodeOnly(IntegerBinaryTreeNode nodeToDelete) {
-        IntegerBinaryTreeNode leftChildNode = nodeToDelete.getLeftChildNode();
-        IntegerBinaryTreeNode rightChildNode = nodeToDelete.getRightChildNode();
+    private boolean has1ChildNodeOnly(IntegerBinaryTreeNode thisNode) {
+        IntegerBinaryTreeNode leftChildNode = thisNode.getLeftChildNode();
+        IntegerBinaryTreeNode rightChildNode = thisNode.getRightChildNode();
 
         return (leftChildNode == null || rightChildNode == null) && !(leftChildNode == null && rightChildNode == null);
     }
 
-    private void deleteLeafNode(IntegerBinaryTreeNode nodeToDelete) {
-        IntegerBinaryTreeNode parentNode = nodeToDelete.getParentNode();
-
-        if (parentNode == null) {
-            root = null;
-            count = 0;
-            return;
-        }
-
-        deleteFromParent(parentNode, nodeToDelete);
-        count--;
-        return;
-    }
-
-    private void deleteFromParent(IntegerBinaryTreeNode parentNode, IntegerBinaryTreeNode nodeToDelete) {
-        if (parentNode.getRightChildNode() == nodeToDelete) {
-            parentNode.setRightChildNode(null);
-        } else if (parentNode.getLeftChildNode() == nodeToDelete) {
-            parentNode.setLeftChildNode(null);
-        }
-    }
-
-    private static boolean isLeaf(IntegerBinaryTreeNode nodeToDelete) {
-        return nodeToDelete.getRightChildNode() == null && nodeToDelete.getLeftChildNode() == null;
+    private static boolean isLeaf(IntegerBinaryTreeNode thisNode) {
+        return thisNode.getRightChildNode() == null && thisNode.getLeftChildNode() == null;
     }
 
 
